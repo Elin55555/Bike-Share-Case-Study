@@ -5,32 +5,26 @@
 <head>
 
 <style>
-  /* Main Layout and Text */
+  /* フォントと色の設定 */
   body {
     font-size: 18px;
     line-height: 1.6;
     color: #333333;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
     font-family: Helvetica, Arial, sans-serif;
   }
 
-  /* Headings */
-  h1, h2, h3 {
-    margin-top: 40px;
-    margin-bottom: 15px;
-    color: #000000;
-  }
-
-  /* Links */
-  a {
-    color: #0366d6;
-    text-decoration: none;
+  /* 記事の幅を制限して、強制的に中央に寄せる */
+  .main-container {
+    max-width: 900px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 0 20px;
   }
   
-  a:hover {
-    text-decoration: underline;
+  /* 念のため、画像も枠からはみ出さないようにする */
+  img {
+    max-width: 100%;
+    height: auto;
   }
 </style>
 
