@@ -5,58 +5,109 @@
 <head>
 
 <style>
-  /* Base Text Settings - Much Larger */
+  /* Import Google Fonts for a modern look */
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@300;700&display=swap');
+
+  /* 1. Page Background - Light Grey for contrast */
   body {
-    font-size: 24px;       /* Increased base font size */
-    line-height: 1.6;      /* Good spacing for lines */
-    color: #222222;        /* Darker text for better contrast */
-    font-family: Helvetica, Arial, sans-serif;
-    background-color: #ffffff;
+    background-color: #f4f6f8;
+    font-family: 'Lato', sans-serif; /* Modern sans-serif font */
+    color: #333;
+    margin: 0;
+    padding: 40px 0;
   }
 
-  /* Center Alignment Fix */
+  /* 2. The Paper/Document Container */
   .main-container {
-    max-width: 1000px !important; /* Wider container for larger text */
+    max-width: 900px !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    padding: 0 30px;
+    background-color: #ffffff; /* White paper */
+    padding: 60px 80px !important; /* More inner spacing */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08); /* Soft shadow */
+    border-radius: 8px; /* Rounded corners */
+    border-top: 6px solid #2c3e50; /* Professional accent bar at top */
   }
 
-  /* Headings - Making them stand out */
+  /* 3. Typography & Headings */
   h1 {
-    font-size: 48px;
-    margin-top: 60px;
-    margin-bottom: 30px;
-    font-weight: bold;
+    font-family: 'Merriweather', serif; /* Elegant serif for main title */
+    font-size: 38px;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 10px;
+    border-bottom: none;
+  }
+  
+  h1.title {
+    font-weight: 900;
+    letter-spacing: 1px;
   }
 
   h2 {
-    font-size: 36px;
+    font-size: 26px;
+    color: #2c3e50;
     margin-top: 50px;
-    margin-bottom: 20px;
-    font-weight: bold;
-    border-bottom: 2px solid #eeeeee; /* Underline for separation */
+    border-bottom: 1px solid #eee;
     padding-bottom: 10px;
+    font-weight: 700;
   }
 
   h3 {
-    font-size: 28px;
+    font-size: 20px;
+    color: #34495e;
     margin-top: 30px;
-    font-weight: bold;
+    font-weight: 700;
   }
 
-  /* Image Safety */
+  h4.author, h4.date {
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 14px;
+    margin: 5px 0;
+    font-weight: normal;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 20px;
+  }
+
+  /* 4. Code Blocks styling */
+  pre {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 15px;
+    font-size: 14px;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: 'Consolas', 'Monaco', monospace;
+    color: #e83e8c; /* Highlight code text */
+  }
+
+  /* 5. Links */
+  a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* 6. Images */
   img {
     max-width: 100%;
     height: auto;
-  }
-  
-  /* Code Blocks (if any) */
-  pre {
-    font-size: 18px; /* Code text size */
-    background-color: #f5f5f5;
-    padding: 15px;
-    border-radius: 5px;
+    display: block;
+    margin: 30px auto; /* Center images */
+    border-radius: 4px;
   }
 </style>
 
