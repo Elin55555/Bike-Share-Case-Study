@@ -1,0 +1,319 @@
+---
+title: "Cyclistic_Case_Study"
+author: "Elin　Johansson"
+date: "2025-11-22"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+This R markdown script showcases the data manipulation and cleaning process undertaken on a dataset for a fictional bike share company called "Cyclistic" using R studio.
+
+
+## Scenario
+
+I am a junior data analyst working in the marketing analyst team at Cyclistic, a bike-share company in Chicago. The director of marketing believes the company’s future success depends on maximizing the number of annual memberships. Therefore, my team wants to understand how casual riders and annual members use Cyclistic bikes differently. From these insights, my team will design a new marketing strategy to convert casual riders into annual members. But first, Cyclistic executives must approve my recommendations, so they must be backed up with compelling data insights and professional data visualizations.
+
+## About the company
+
+
+In 2016, Cyclistic launched a successful bike-share offering. Since then, the program has grown to a fleet of 5,824 bicycles that are geotracked and locked into a network of 692 stations across Chicago.The bikes can be unlocked from one station and returned to any other station in the system anytime.
+
+Until now, Cyclistic’s marketing strategy relied on building general awareness and appealing to broad consumer segments.One approach that helped make these things possible was the flexibility of its pricing plans: single-ride passes, full-day passes, and annual memberships.Customers who purchase single-ride or full-day passes are referred to as casual riders.Customers who purchase annual memberships are Cyclistic members.
+
+Cyclistic’s finance analysts have concluded that annual members are much more profitable than casual riders. Although the pricing flexibility helps Cyclistic attract more customers, Moreno believes that maximizing the number of annual members will be key to future growth.Rather than creating a marketing campaign that targets all-new customers, Moreno believes there is a solid opportunity to convert casual riders into members. She notes that casual riders are already aware of the Cyclistic program and have chosen Cyclistic for their mobility needs.
+
+Moreno has set a clear goal: Design marketing strategies aimed at converting casual riders into annual members. In order to do that, however, the team needs to better understand how annual members and casual riders differ, why casual riders would buy a membership, and how digital media could affect their marketing tactics. Moreno and her team are interested in analyzing the Cyclistic historical bike trip data to identify trends.
+
+## Characters and teams
+
+
+* **Cyclistic:** A bike-share program that features more than 5,800 bicycles and 600 docking stations. Cyclistic sets itself apart by also offering reclining bikes,hand tricycles, and cargo bikes, making bike-share more inclusive to people with disabilities and riders who can’t use a standard two-wheeled bike. The majority of riders opt for traditional bikes; about 8% of riders use the assistive options. Cyclistic users are more likely to ride for leisure, but about 30% use them to commute to work each day.
+* **Lily Moreno:** Director of Marketing and my manager.
+* **Cyclistic Marketing Analytics Team:** A team of data analysts responsible for collecting, analyzing, and reporting data.
+* **Cyclistic Executive Team:** The detailed-oriented executive team who will decide whether to approve the recommended marketing program.
+
+
+## 1. Ask
+
+
+The main objective is to gain insights into Cyclistic bikeshare membership patterns. By finding out how annual members and casual riders use the bikes differently, I aim to provide recommendations to convert casual riders into annual members.
+Increasing the number of annual members will improve Cyclistic's financial standing, as annual members are more profitable than casual riders.
+
+#### Key tasks
+
+
+To address the business needs, I will focus on the following core objectives in this phase:
+
+* **Define the problem:** Clearly articulate the business goal of converting casual riders into annual members.
+* **Analyze historical data:** Use Cyclistic's trip data to uncover behavioral differences between the two user groups.
+* **Provide recommendations:** Formulate a data-driven marketing strategy to present to the executive team.
+
+
+#### The key stakeholders are:
+
+* Director of marketing (Lily Moreno – My Manager)
+* Cyclistic Marketing Analytics team
+* Cyclistic Executive team
+
+#### Business Task
+
+The primary objective of this analysis is to characterize the distinct usage behaviors of Cyclistic's annual members versus casual riders. These insights will serve as the foundation for a targeted marketing campaign designed to increase annual membership subscriptions among the casual user base.
+
+## 2. Prepare
+
+
+#### 2.1 Data Source
+
+For this analysis, I will use Cyclistic’s historical trip data from **Q1 2019** and **Q1 2020**. The data has been made available by **Motivate International Inc.** under a [public license](https://divvybikes.com/data-license-agreement).
+
+#### 2.2 Data Organization
+
+The data is stored in two separate files:
+
+* [Divvy_Trips_2019_Q1](https://divvy-tripdata.s3.amazonaws.com/Divvy_Trips_2019_Q1.zip)
+* [Divvy_Trips_2020_Q1](https://divvy-tripdata.s3.amazonaws.com/Divvy_Trips_2020_Q1.zip)
+
+Each file includes trip details such as ride ID, bike type, start/end time, station names, and user type. It is important to note that the column names and data structures differ between these two datasets, which will require standardization during the Process phase.
+
+#### 2.3 ROCCC Analysis
+
+To ensure the integrity and credibility of the data, I applied the **ROCCC** framework:
+
+* **Reliable:** The data is public data provided by the city of Chicago's bike-share operator, ensuring high accuracy.
+* **Original:** This is a first-party dataset collected directly by Motivate International Inc.
+* **Comprehensive:** The dataset contains all necessary parameters (ride time, location, user type) to answer the business questions.
+* **Current:** Although this analysis focuses on historical data from Q1 2019 and Q1 2020 to compare trends over time, the source remains relevant for understanding seasonal usage patterns.
+* **Cited:** The data source is properly cited and available under a standard Data License Agreement.
+
+#### 2.4 Data Limitations & Privacy
+
+In compliance with data privacy regulations, the dataset **does not contain any personally identifiable information (PII)**.
+
+* Pass purchases cannot be connected to credit card numbers.
+* It is not possible to determine if casual riders live in the Cyclistic service area or if they have purchased multiple single passes.
+
+## 3. Process
+
+#### Tool Selection
+
+I have selected RStudio for this analysis due to the large size of the dataset and the need for complex data manipulation and visualization. R allows for a reproducible workflow, ensuring that every step of the data cleaning process is documented and verifiable.
+
+In this phase, I will:
+
+1.  Set up the environment by loading necessary packages.
+2.  Import the historical trip data.
+3.  Clean and merge the datasets into a single dataframe for analysis.
+
+##### 1.Set up the environment by loading necessary packages.
+
+```{r setup_packages, eval=FALSE}
+# Install packages
+# install.packages("tidyverse")  # For data wrangling and visualization
+# install.packages("lubridate")  # For handling date and time attributes
+# install.packages("ggplot2")    # For creating visualizations
+# install.packages("readr")      # For reading CSV files
+```
+
+```{r load_packages, message=FALSE, warning=FALSE}
+# Load necessary packages for analysis
+library(tidyverse)  
+library(lubridate) 
+library(ggplot2)    
+library(readr)      
+```
+
+##### 2.Import the historical trip data
+
+```{r load_and_process, message=FALSE, warning=FALSE,cache=TRUE}
+# Import Data
+q1_2019 <- read_csv("Divvy_Trips_2019_Q1.csv")
+q1_2020 <- read_csv("Divvy_Trips_2020_Q1.csv")
+```
+
+##### 3.Clean and merge the datasets into a single dataframe for analysis
+
+```{r}
+# Standardize Columns (2019 to match 2020)
+q1_2019 <- rename(q1_2019,
+                   ride_id = trip_id,
+                   started_at = start_time,  
+                   ended_at = end_time,  
+                   member_casual = usertype,
+                  start_station_name = from_station_name,
+                  end_station_name = to_station_name,
+                  start_station_id = from_station_id,
+                  end_station_id = to_station_id)
+```
+
+
+```{r}
+# Add missing column to 2019 data
+q1_2019 <- mutate(q1_2019,rideable_type="rec_bike_type_unknown")
+```
+
+
+```{r}
+# Convert data types to character to ensure stacking works correctly
+q1_2019 <- mutate(q1_2019, ride_id = as.character(ride_id))
+q1_2020 <- mutate(q1_2020, ride_id = as.character(ride_id))
+```
+
+
+```{r}
+# Combine Data
+all_trips <- bind_rows(q1_2019,q1_2020)
+```
+
+
+```{r}
+# Clean & Add Columns (Ride Length & Day of Week)
+all_trips <- all_trips %>%
+  mutate(member_casual = recode(member_casual, "Subscriber" = "member", "Customer" = "casual")) %>%
+  mutate(day_of_week = format(as.Date(started_at), "%A")) %>%
+  mutate(ride_length = difftime(ended_at, started_at, units = "secs")) %>%
+  mutate(ride_length = as.numeric(ride_length)) %>% # Convert to numeric (seconds) for calculations
+  filter(ride_length > 0) %>% # Remove bad data (negative rides)
+  filter(start_station_name != "HQ QR" | is.na(start_station_name)) # Remove HQ QR testing station
+```
+
+
+```{r}
+# Check the clean data structure
+glimpse(all_trips)
+summary(all_trips$ride_length)
+```
+
+
+## 4. Analyze
+
+```{r}
+# 1. Descriptive analysis on ride_length (all figures in seconds)
+summary(all_trips$ride_length)
+```
+
+
+```{r}
+# 2. Compare members and casual users
+# Calculate the average ride_length for members and casual riders
+aggregate(all_trips$ride_length ~ all_trips$member_casual, FUN = mean)
+```
+
+
+```{r}
+# Calculate the median ride_length for members and casual riders
+aggregate(all_trips$ride_length ~ all_trips$member_casual, FUN = median)
+```
+
+
+```{r}
+# Calculate the max ride_length for members and casual riders
+aggregate(all_trips$ride_length ~ all_trips$member_casual, FUN = max)
+```
+
+
+```{r}
+# 3. See the average ride time by each day for members vs casual users
+# Notice that the days of the week are out of order. Let's fix that.
+all_trips$day_of_week <- ordered(all_trips$day_of_week, levels=c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
+```
+
+
+```{r}
+# Now, let's run the average ride time by each day for members vs casual users
+all_trips %>% group_by(member_casual,day_of_week) %>% 
+  summarise(number_of_rides = n(), average_duration =
+  mean(ride_length)) %>% 
+  arrange(member_casual,day_of_week)
+
+```
+
+
+```{r}
+# 4. Analyze ridership data by type and weekday
+# This creates a summary dataframe to check the number of rides and average duration
+all_trips %>% 
+  group_by(member_casual, day_of_week) %>%  # groups by usertype and weekday
+  summarise(number_of_rides = n(),          # calculates the number of rides
+            average_duration = mean(ride_length)) %>% # calculates the average duration
+  arrange(member_casual, day_of_week)       # sorts
+```
+
+
+## 5. Share
+
+#### 1. Visualize the number of rides by rider type
+
+```{r}
+# This chart helps identify which days are most popular for each user type.
+all_trips %>% 
+  group_by(member_casual, day_of_week) %>% 
+  summarise(number_of_rides = n(), .groups = 'drop') %>% 
+  arrange(member_casual, day_of_week)  %>% 
+  ggplot(aes(x = day_of_week, y = number_of_rides, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  labs(title = "Total Number of Rides by User Type and Day of Week",
+       subtitle = "Members vs. Casual Riders",
+       x = "Day of Week",
+       y = "Number of Rides",
+       fill = "User Type") +
+  scale_y_continuous(labels = scales::comma)
+```
+
+#### 2. Visualize the average duration by rider type
+```{r}
+# This chart helps identify WHO rides longer.
+all_trips %>% 
+  group_by(member_casual, day_of_week) %>% 
+  summarise(average_duration = mean(ride_length), .groups = 'drop') %>% 
+  arrange(member_casual, day_of_week)  %>% 
+  ggplot(aes(x = day_of_week, y = average_duration, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  labs(title = "Average Trip Duration by User Type and Day of Week",
+       subtitle = "Members vs. Casual Riders",
+       x = "Day of Week",
+       y = "Average Duration (Seconds)",
+       fill = "User Type")
+```
+
+## 6. Act
+
+Based on the analysis, I have identified clear differences between annual members and casual riders.
+Casual riders tend to ride more on **weekends** and for **longer durations**, whereas annual members use bikes consistently throughout the week, likely for commuting.
+
+### Key Findings
+
+1.  **Usage Timing:** Casual ridership peaks significantly on Saturdays and Sundays.
+2.  **Ride Duration:** Casual riders ride for nearly twice as long as members on average.
+3.  **Frequency:** Annual members have a stable usage pattern during weekdays.
+
+### Top 3 Recommendations
+
+To convert casual riders into annual members, I propose the following marketing strategies:
+
+1.  **"Weekend" Membership Plan:**
+    * Create a membership tier specifically targeting weekend users, or offer a discount for annual memberships if they sign up after a weekend ride.
+    
+2.  **In-App Notifications for Long Riders:**
+    * Since casual riders take longer trips, use the Cyclistic app to send a notification after a long ride showing how much money they could have saved with a membership.
+
+3.  **Seasonal "Leisure" Campaigns:**
+    * Launch marketing campaigns during peak summer months and weekends that emphasize the benefits of membership for leisure riding, not just commuting.
+
+### Data Export
+
+As a final step, I will export the summary data for further use or for the executive team to review in Excel.
+
+```{r export_summary}
+# Create a summary dataframe
+counts <- all_trips %>% 
+  group_by(member_casual, day_of_week) %>% 
+  summarise(number_of_rides = n(), 
+            average_duration = mean(ride_length), .groups = 'drop') %>% 
+  arrange(member_casual, day_of_week)
+```
+
+```{r export}
+# Export to CSV
+write_csv(counts, "avg_ride_length.csv")
