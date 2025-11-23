@@ -5,26 +5,58 @@
 <head>
 
 <style>
-  /* フォントと色の設定 */
+  /* Base Text Settings - Much Larger */
   body {
-    font-size: 22px;
-    line-height: 1.6;
-    color: #333333;
+    font-size: 22px;       /* Increased base font size */
+    line-height: 1.6;      /* Good spacing for lines */
+    color: #222222;        /* Darker text for better contrast */
     font-family: Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
   }
 
-  /* 記事の幅を制限して、強制的に中央に寄せる */
+  /* Center Alignment Fix */
   .main-container {
-    max-width: 900px !important;
+    max-width: 1000px !important; /* Wider container for larger text */
     margin-left: auto !important;
     margin-right: auto !important;
-    padding: 0 20px;
+    padding: 0 30px;
   }
-  
-  /* 念のため、画像も枠からはみ出さないようにする */
+
+  /* Headings - Making them stand out */
+  h1 {
+    font-size: 48px;
+    margin-top: 60px;
+    margin-bottom: 30px;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 36px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    border-bottom: 2px solid #eeeeee; /* Underline for separation */
+    padding-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 28px;
+    margin-top: 30px;
+    font-weight: bold;
+  }
+
+  /* Image Safety */
   img {
     max-width: 100%;
     height: auto;
+  }
+  
+  /* Code Blocks (if any) */
+  pre {
+    font-size: 18px; /* Code text size */
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
   }
 </style>
 
