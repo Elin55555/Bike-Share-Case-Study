@@ -8,7 +8,6 @@
   /* Google Fonts */
   @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@300;700&display=swap');
 
-  /* --- 基本設定（パソコン用） --- */
   body {
     background-color: #f4f6f8;
     font-family: 'Lato', sans-serif;
@@ -82,32 +81,31 @@
   
   a { color: #3498db; text-decoration: none; font-weight: bold; }
 
-
-  /* --- ★ここが修正ポイント：スマホ用（95%縮小版） --- */
   @media screen and (max-width: 768px) {
     body {
-      padding: 10px 0; /* 上下に少しだけ隙間 */
+      padding: 10px 0;
     }
 
     .main-container {
-      /* 幅を画面の95%に制限して、左右に隙間を作る */
-      width: 95% !important; 
+      width: 95% !important;
       margin-left: auto !important;
       margin-right: auto !important;
-      
       padding: 20px 15px !important;
-      box-sizing: border-box; /* はみ出し防止の計算式 */
+      box-sizing: border-box;
       border-radius: 4px;
     }
 
-    h1 { font-size: 26px; word-break: break-word; } /* タイトル折り返し */
-    h2 { font-size: 22px; }
+    h1 {
+      font-size: 6vw; 
+      white-space: nowrap; 
+      overflow: hidden;   
+      text-align: center;
+    }
+
+    h2 { font-size: 20px; }
     p { font-size: 16px; }
     
-    /* 強制的にはみ出しを防止する */
-    pre, div, p {
-      max-width: 100%;
-    }
+    pre, div, p { max-width: 100%; }
   }
 </style>
 
