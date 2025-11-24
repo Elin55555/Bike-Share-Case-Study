@@ -22,14 +22,12 @@
     margin-left: auto !important;
     margin-right: auto !important;
     background-color: #ffffff;
-    /* パソコンでは余白を大きくリッチに */
     padding: 60px 80px !important;
     box-shadow: 0 10px 40px rgba(0,0,0,0.08);
     border-radius: 8px;
     border-top: 6px solid #2c3e50;
   }
 
-  /* 見出し・文字の設定 */
   h1 {
     font-family: 'Merriweather', serif;
     font-size: 38px;
@@ -61,7 +59,6 @@
     margin-bottom: 20px;
   }
 
-  /* 画像とコードのはみ出し防止 */
   img {
     max-width: 100%;
     height: auto;
@@ -73,9 +70,8 @@
     background: #f8f9fa;
     border: 1px solid #e9ecef;
     padding: 15px;
-    overflow-x: auto; /* 横スクロールさせる */
+    overflow-x: auto;
     border-radius: 6px;
-    max-width: 100%;
   }
   
   code {
@@ -87,24 +83,31 @@
   a { color: #3498db; text-decoration: none; font-weight: bold; }
 
 
-  /* --- ★ここが修正ポイント：スマホ用の設定 --- */
+  /* --- ★ここが修正ポイント：スマホ用（95%縮小版） --- */
   @media screen and (max-width: 768px) {
     body {
-      padding: 0; /* スマホでは背景の隙間をなくす */
+      padding: 10px 0; /* 上下に少しだけ隙間 */
     }
 
     .main-container {
-      width: 100% !important;
-      max-width: 100% !important;
-      /* 余白をスマホ用に小さく調整 */
-      padding: 30px 20px !important;
-      border-radius: 0;
-      box-shadow: none;
+      /* 幅を画面の95%に制限して、左右に隙間を作る */
+      width: 95% !important; 
+      margin-left: auto !important;
+      margin-right: auto !important;
+      
+      padding: 20px 15px !important;
+      box-sizing: border-box; /* はみ出し防止の計算式 */
+      border-radius: 4px;
     }
 
-    h1 { font-size: 28px; } /* タイトルを少し小さく */
+    h1 { font-size: 26px; word-break: break-word; } /* タイトル折り返し */
     h2 { font-size: 22px; }
-    p { font-size: 16px; } /* 本文も読みやすいサイズに */
+    p { font-size: 16px; }
+    
+    /* 強制的にはみ出しを防止する */
+    pre, div, p {
+      max-width: 100%;
+    }
   }
 </style>
 
